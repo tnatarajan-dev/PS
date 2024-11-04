@@ -484,3 +484,5 @@ fabricated_data_with_ecl_mom_charge = add_ecl_mom_charge(fabricated_data_with_ec
 
 print(fabricated_data_with_ecl_mom_charge.shape)
 print(fabricated_data_with_ecl_mom_charge.head())
+
+fabricated_data_with_ecl_mom_charge.to_csv("Prelim_data.csv")
