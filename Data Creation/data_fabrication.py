@@ -15,7 +15,7 @@ data_file_name = 'Kaggle_dataset.csv'
 data = pd.read_csv(os.path.join(data_folder_path, data_file_name))
 
 # Initialize parameters
-start_date = datetime.strptime("2014-01-31", "%Y-%m-%d")
+start_date = datetime.strptime("2013-12-31", "%Y-%m-%d")
 end_date = datetime.strptime("2024-10-31", "%Y-%m-%d")
 monthly_churn_rate = 0.01            # 1% churn
 new_customers_per_month = 3          # New customers per month
@@ -62,8 +62,8 @@ def generate_monthly_data_with_new_customers(data, start_date, end_date, monthly
                 'Customer Age': np.random.randint(18, 70),  # Random age between 18 and 70
                 'Gender': np.random.choice(['M', 'F']),
                 'Education_Level': np.random.choice(['Uneducated', 'High School', 'Graduate', 'Post-Graduate', 'Doctorate']),
-                'Marital_Status': np.random.choice(['Single', 'Married', 'Unknown', 'Divorced']),
-                'Income_Category': np.random.choice(['Less than $40K', '$40K - $60K', '$60K - $80K', '$80K - $120K', '$120K +']),
+                'Marital Status': np.random.choice(['Single', 'Married', 'Unknown', 'Divorced']),
+                'Income Category': np.random.choice(['Less than $40K', '$40K - $60K', '$60K - $80K', '$80K - $120K', '$120K +']),
                 'Month on Book': 1,  # New customers start with 1 month on book
                 'Credit_Limit': np.random.randint(1000, 20000),  # Random credit limit between 1k and 20k
                 'Revolving_Bal': np.random.randint(0, 5000),  # Random revolving balance between 0 and 5k
@@ -92,7 +92,7 @@ fabricated_data = generate_monthly_data_with_new_customers(data, start_date, end
 
 # Adjust Revolving Balance based on customer profile and credit limit
 def adjust_revolving_balance(data):
-    # Define multipliers for Education_Level and Income_Category to influence Revolving_Bal
+    # Define multipliers for Education_Level and Income Category to influence Revolving_Bal
     education_multipliers = {
         'Uneducated': 1.0,
         'High School': 0.9,
@@ -113,7 +113,7 @@ def adjust_revolving_balance(data):
     def calculate_revolving_bal(row):
         # Base multiplier based on education and income
         education_multiplier = education_multipliers.get(row['Education_Level'], 1.0)
-        income_multiplier = income_multipliers.get(row['Income_Category'], 1.0)
+        income_multiplier = income_multipliers.get(row['Income Category'], 1.0)
 
         # Age influence: older customers have a slightly reduced revolving balance
         age_factor = max(0.5, 1 - (row['Customer Age'] / 100))
@@ -229,7 +229,7 @@ def add_fico_scores(data):
         income_factor = {
             'Less than $40K': 0.9, '$40K - $60K': 1.0,
             '$60K - $80K': 1.05, '$80K - $120K': 1.1, '$120K +': 1.15
-        }.get(row['Income_Category'], 1.0)
+        }.get(row['Income Category'], 1.0)
 
         # Apply adjustments and cap FICO score between 400 and 850
         adjusted_fico = min(max(int(base_fico * utilization_factor * education_factor * income_factor), 400), 850)
@@ -273,7 +273,7 @@ def add_total_debt(data):
             '$60K - $80K': 0.6,
             '$80K - $120K': 0.8,
             '$120K +': 1.0
-        }.get(row['Income_Category'], 0.5)
+        }.get(row['Income Category'], 0.5)
         
         if row['Customer Age'] > 30 and income_factor > 0.5:
             mortgage = np.random.uniform(50000, 500000) * income_factor  # Range adjusted by income factor
@@ -307,7 +307,7 @@ def add_dti_ratio(data):
     # Function to calculate DTI based on Total Debt and representative income
     def calculate_dti(row):
         # Get base income from income category, apply slight random variation
-        base_income = income_values.get(row['Income_Category'], 50000)  # Default to 50K if category is missing
+        base_income = income_values.get(row['Income Category'], 50000)  # Default to 50K if category is missing
         income_with_variation = base_income * np.random.uniform(0.9, 1.1)  # Apply 10% variation
         
         # Calculate DTI ratio, ensuring it stays within 0-1 range
@@ -387,7 +387,7 @@ def add_delinquency(data):
             high_risk = (
                 row['Utilization'] > 0.8 or
                 row['Education_Level'] in ['Uneducated', 'High School'] or
-                row['Income_Category'] in ['Less than $40K', '$40K - $60K'] or
+                row['Income Category'] in ['Less than $40K', '$40K - $60K'] or
                 row['Revolving_Bal'] > 3000
             )
             
