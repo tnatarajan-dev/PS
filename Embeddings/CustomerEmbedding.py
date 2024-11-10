@@ -9,7 +9,7 @@ vector_path = "Vectors"
 model_name = "text-embedding-3-small"
 prompt1 = "Which customers will default this month?"
 prompt2 = "Which customers will have lower FICO this month?"
-prompt3 = "Which customers will have lower delinquency more than 0 this month?"
+prompt3 = "Which customers will have delinquency more than 0 this month?"
 
 model_input_params = {
     "temperature": 0.0,
