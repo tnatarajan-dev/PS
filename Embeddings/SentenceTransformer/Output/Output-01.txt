@@ -1,0 +1,29 @@
+# Predefined
+customer_descriptions = [
+    "John is a 30-year-old software engineer from New York interested in technology and fitness.",
+    "Sarah is a 45-year-old teacher from Chicago who loves traveling and cooking.",
+    "Michael is a 28-year-old data scientist from San Francisco with a passion for music and art."
+]
+
+# Custom
+customer_descriptions = [
+    "Betty is a 32-year-old programmer from New York who is active in sports and technology.",
+]
+
+
+Sentence Transformer similarity score for Customer_1 : tensor([[0.3611]])
+Sentence Transformer Util cosine score for Customer_1 : tensor([[0.3611]])
+Pytorch cosine score for Customer_1 : tensor([[0.3611]])
+Jaccard similarity score for Customer_1 : 0.0
+
+
+Sentence Transformer similarity score for Customer_2 : tensor([[0.5205]])
+Sentence Transformer Util cosine score for Customer_2 : tensor([[0.5205]])
+Pytorch cosine score for Customer_2 : tensor([[0.5205]])
+Jaccard similarity score for Customer_2 : 0.0
+
+
+Sentence Transformer similarity score for Customer_3 : tensor([[0.2787]])
+Sentence Transformer Util cosine score for Customer_3 : tensor([[0.2787]])
+Pytorch cosine score for Customer_3 : tensor([[0.2787]])
+Jaccard similarity score for Customer_3 : 0.0
